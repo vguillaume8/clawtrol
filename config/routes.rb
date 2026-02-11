@@ -2,6 +2,8 @@ Rails.application.routes.draw do
   # API routes
   namespace :api do
     namespace :v1 do
+      # Health check
+      get "health", to: "health#show"
       resource :settings, only: [ :show, :update ]
 
       # Agent Personas
