@@ -70,20 +70,6 @@ Rails.application.configure do
   # Only use :id for inspections in production.
   config.active_record.attributes_for_inspect = [ :id ]
 
-  # Enable DNS rebinding protection and other `Host` header attacks.
-  config.hosts = [
-    "clawdeck.io",           # Production domain
-    "www.clawdeck.io",       # WWW subdomain
-    "104.236.193.0",      # Server IP for direct access
-    IPAddr.new("127.0.0.1"),  # Localhost
-    IPAddr.new("::1")         # IPv6 localhost
-  ]
-
-  # Allow Render and custom domain hosts
-  config.hosts << "clawdeck.onrender.com"
-  config.hosts << "app.clawdeck.io"
-  config.hosts << ".clawdeck.io"  # Allow all subdomains
-  
-  # Skip DNS rebinding protection for the default health check endpoint.
-  config.host_authorization = { exclude: ->(request) { request.path == "/up" } }
+  # Disable DNS rebinding protection for local/self-hosted deployment
+  config.hosts.clear
 end
