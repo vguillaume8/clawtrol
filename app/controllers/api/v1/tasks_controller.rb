@@ -178,6 +178,17 @@ module Api
         render json: { count: count }
       end
 
+      # GET /api/v1/tasks/stats - task statistics for dashboard
+      def stats
+        total_tasks = current_user.tasks.count
+        tasks_by_status = current_user.tasks.group(:status).count
+
+        render json: {
+          total_tasks: total_tasks,
+          tasks_by_status: tasks_by_status
+        }
+      end
+
       # GET /api/v1/tasks/recurring - list recurring task templates
       def recurring
         @tasks = current_user.tasks
