@@ -20,7 +20,8 @@ module Api
           description: updated_description(task.description.to_s, findings),
           status: "in_review",
           assigned_to_agent: true,
-          assigned_at: task.assigned_at || Time.current
+          assigned_at: task.assigned_at || Time.current,
+          agent_persona_id: 2  # Assign to Marcus (Reviewer) when moving to in_review
         }
 
         # Auto-link session_id/session_key on first hook
