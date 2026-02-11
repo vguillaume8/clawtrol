@@ -178,6 +178,37 @@ module Api
         render json: { count: count }
       end
 
+      # GET /api/v1/tasks/stats - task statistics for dashboard
+      # Returns total count, tasks by status, and daily metrics
+      def stats
+        # Total tasks count
+        total_tasks = current_user.tasks.count
+
+        # Tasks grouped by status
+        tasks_by_status = current_user.tasks.group(:status).count
+
+        # Daily metrics - tasks created/completed today
+        today_start = Time.current.beginning_of_day
+        created_today = current_user.tasks.where("created_at >= ?", today_start).count
+        completed_today = current_user.tasks.where("completed_at >= ?", today_start).count
+
+        # Weekly metrics - tasks created/completed in last 7 days
+        week_start = 7.days.ago.beginning_of_day
+        created_this_week = current_user.tasks.where("created_at >= ?", week_start).count
+        completed_this_week = current_user.tasks.where("completed_at >= ?", week_start).count
+
+        render json: {
+          total_tasks: total_tasks,
+          tasks_by_status: tasks_by_status,
+          daily_metrics: {
+            created_today: created_today,
+            completed_today: completed_today,
+            created_this_week: created_this_week,
+            completed_this_week: completed_this_week
+          }
+        }
+      end
+
       # GET /api/v1/tasks/recurring - list recurring task templates
       def recurring
         @tasks = current_user.tasks

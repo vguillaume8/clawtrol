@@ -82,4 +82,9 @@ Rails.application.configure do
   # Allow ngrok hosts for remote access
   config.hosts << /.*\.ngrok-free\.app/
   config.hosts << /.*\.ngrok\.io/
+  
+  # Allow home.server for local network access
+  config.hosts << "home.server"
+  config.hosts << "pi5.server"
+  config.hosts << "192.168.8.141"
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_02_06_125855) do
+ActiveRecord::Schema[8.1].define(version: 2026_02_11_154247) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -209,6 +209,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_06_125855) do
     t.text "error_message"
     t.bigint "followup_task_id"
     t.integer "impact", default: 0, null: false
+    t.string "last_agent_emoji"
+    t.string "last_agent_name"
     t.string "model"
     t.string "name"
     t.datetime "next_recurrence_at"
@@ -260,6 +262,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_06_125855) do
 
   create_table "token_usages", force: :cascade do |t|
     t.bigint "agent_persona_id"
+    t.integer "cache_read_tokens", default: 0, null: false
+    t.integer "cache_write_tokens", default: 0, null: false
     t.decimal "cost", precision: 10, scale: 6, default: "0.0"
     t.datetime "created_at", null: false
     t.integer "input_tokens", default: 0
