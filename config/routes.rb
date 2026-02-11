@@ -55,6 +55,7 @@ Rails.application.routes.draw do
           get :pending_attention
           get :recurring
           get :errored_count
+          get :stats
           post :spawn_ready
         end
         member do
